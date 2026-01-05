@@ -1,0 +1,46 @@
+/* © 2025 Altangerel Ganbaatar. All rights reserved.
+Licensed under the MIT License. See LICENSE file in the project root for details. */
+
+.search-container {
+  margin: 20px 0;
+}
+
+.search-input {
+  padding: 10px;
+  width: 70%;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.search-btn {
+  padding: 10px;
+  margin-left: 10px;
+  background-color: #333;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.search-btn:hover {
+  background-color: #555;
+}
+
+.search-results ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.search-results ul li {
+  margin: 10px 0;
+}
+
+.search-results ul li a {
+  font-weight: bold;
+  text-decoration: none;
+  color: #333;
+}
+
+.search-results ul li a:hover {
+  text-decoration: underline;
+}

@@ -1,0 +1,62 @@
+/* © 2025 Altangerel Ganbaatar. All rights reserved.
+Licensed under the MIT License. See LICENSE file in the project root for details. */
+
+html,
+body,
+#root {
+  height: 100%;
+  /* Ensure the body takes full height */
+  margin: 0;
+}
+
+body {
+  /* background-image: url('/public/background.png'); */
+  background-size: cover;
+  /* Adjusts the image to cover the entire background */
+  background-position: center;
+  /* Centers the background image */
+  background-repeat: repeat;
+  /* Ensures the image doesn't repeat */
+}
+
+/* body.light-theme {
+  background-image: url('/public/background.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: repeat;
+}
+
+body.dark-theme {
+  background-image: url('/public/background_dark.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: repeat;
+} */
+
+.container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  /* Full viewport height */
+}
+
+header,
+footer {
+  flex-shrink: 0;
+  /* Prevent the header and footer from shrinking */
+}
+
+.main {
+  flex-grow: 1;
+  /* Fill remaining vertical space */
+  overflow-y: auto;
+  /* Enable scrolling if content overflows */
+  padding-bottom: 20px;
+  /* Add space above footer */
+}
+
+footer {
+  background-color: #f1f1f1;
+  padding: 20px;
+  text-align: center;
+}

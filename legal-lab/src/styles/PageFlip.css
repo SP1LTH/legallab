@@ -1,0 +1,13 @@
+/* © 2025 Altangerel Ganbaatar. All rights reserved.
+Licensed under the MIT License. See LICENSE file in the project root for details. */
+
+.my-flipbook .page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  background-color: white;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  padding: 10px;
+}

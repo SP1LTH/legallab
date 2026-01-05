@@ -1,6 +1,6 @@
 # Legal Lab Төсөл
 
-Энэхүү төсөл нь **frontend** (React дээр суурилсан) `legal-lab` хавтас дотор, мөн **backend** (Node.js/Express дээр суурилсан) `backend` хавтас дотор байрладаг.
+Энэхүү төсөл нь **frontend** (React дээр суурилсан) `legal-lab` хавтас дотор, мөн **backend** (Node.js/Express дээр суурилсан) `backend` хавтас дотор байрладаг
 
 ## Урьдчилсан нөхцөлүүд
 

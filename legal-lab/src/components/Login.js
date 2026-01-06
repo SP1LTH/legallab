@@ -33,7 +33,7 @@ const Login = ({ isDarkMode }) => {
       const response = await axios.post('/api/auth/login', { email, password });
       const { token, user } = response.data;
 
-      // Use sessionStorage or localStorage based on "Stay Logged In"
+      // use sessionStorage or localStorage based on "Stay Logged In"
       const storage = stayLoggedIn ? localStorage : sessionStorage;
       storage.setItem('token', token);
       login(user, token);

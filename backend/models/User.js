@@ -11,7 +11,7 @@ const userSchema = new mongoose.Schema(
     email: { type: String, required: true, unique: true },
     phoneNumber: { type: Number, sparse: true },
     password: { type: String, required: true },
-    role: { type: String, enum: ["user", "admin", "editor", "journal", "superAdmin", "author"], default: "user" }, // Can be 'user' or 'admin'
+    role: { type: String, enum: ["user", "admin", "editor", "journal", "superAdmin", "author"], default: "user" }, // can be 'user' or 'admin'
     isVerified: { type: Boolean, default: false },
     favorites: [{ type: Schema.Types.ObjectId, ref: "Document" }],
     resetPasswordToken: { type: String, default: null },

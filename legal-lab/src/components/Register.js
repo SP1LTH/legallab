@@ -27,7 +27,7 @@ const Register = ({ isDarkMode }) => {
     email: "",
     password: "",
     phoneNumber: "",
-    role: "user", // Default role is "user"
+    role: "user", // default role is "user"
   });
   const [error, setError] = useState("");
   const [phoneWarning, setPhoneWarning] = useState("");

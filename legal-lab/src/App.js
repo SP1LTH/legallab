@@ -40,7 +40,7 @@ import EditJournal from './components/EditJournal';
 import { lightTheme, darkTheme } from "./theme"; // Import themes
 import { LanguageProvider } from "./context/LanguageContext";
 
-// Import the functions you need from the SDKs you need
+// import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
 // TODO: Add SDKs for Firebase products that you want to use

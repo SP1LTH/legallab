@@ -6,7 +6,7 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 const requestIp = require("request-ip");
 const cookieParser = require("cookie-parser");
-const uuid = require("uuid"); // To generate unique session IDs
+const uuid = require("uuid"); // to generate unique session IDs
 const winston = require('winston');
 require('dotenv').config();
 

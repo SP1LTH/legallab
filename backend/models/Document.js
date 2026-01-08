@@ -36,7 +36,7 @@ const documentSchema = new mongoose.Schema(
     }, // New status field
     addedBy: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "User", // Reference to User model
+      ref: "User", // Reference to user model
       required: true,
     },
     citationCount: { type: Number, default: 0 }, // Total citation count

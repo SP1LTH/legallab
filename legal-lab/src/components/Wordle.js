@@ -1,6 +1,3 @@
-// © 2025 Altangerel Ganbaatar. All rights reserved.
-// Licensed under the MIT License. See LICENSE file in the project root for details.
-
 import React, { useState, useEffect } from 'react';
 import { WORDS } from './words'; // Import words from a separate file
 import { Dialog, DialogTitle, DialogContent, DialogActions, Button } from '@mui/material';
@@ -21,12 +18,49 @@ const WordleGame = () => {
   const [currentGuess, setCurrentGuess] = useState('');
   const [currentRow, setCurrentRow] = useState(0);
   const [gameOver, setGameOver] = useState(false);
-  const [disabledLetters, setDisabledLetters] = useState([]);
+  const [letterStatuses, setLetterStatuses] = useState({});
   const [submittedGuesses, setSubmittedGuesses] = useState([]);
   const [warning, setWarning] = useState('');
   const [rolling, setRolling] = useState(false);
-  const [newGuess, setNewGuess] = useState('');
-  const [instructionsOpen, setInstructionsOpen] = useState(false); // State for dialog
+  const [instructionsOpen, setInstructionsOpen] = useState(false);
+
+  const resetGame = () => {
+    setWord(getRandomWord());
+    setGuesses(['', '', '', '', '', '']);
+    setCurrentGuess('');
+    setCurrentRow(0);
+    setGameOver(false);
+    setLetterStatuses({});
+    setSubmittedGuesses([]);
+    setWarning('');
+    setRolling(false);
+  };
+
+  const updateLetterStatuses = (guess) => {
+    const newStatuses = { ...letterStatuses };
+    const wordLetters = word.split('');
+    const guessLetters = guess.split('');
+
+    // First, mark correct positions
+    guessLetters.forEach((letter, index) => {
+      if (letter === wordLetters[index]) {
+        newStatuses[letter] = 'correct';
+        wordLetters[index] = null; // Mark as used
+      }
+    });
+
+    // Then, mark present letters
+    guessLetters.forEach((letter, index) => {
+      if (newStatuses[letter] !== 'correct' && wordLetters.includes(letter)) {
+        newStatuses[letter] = 'present';
+        wordLetters[wordLetters.indexOf(letter)] = null; // Mark as used
+      } else if (!newStatuses[letter]) {
+        newStatuses[letter] = 'absent';
+      }
+    });
+
+    setLetterStatuses(newStatuses);
+  };
 
   const handleKeyPress = (event) => {
     if (gameOver) return;
@@ -35,14 +69,12 @@ const WordleGame = () => {
       submitGuess();
     } else if (event.key === 'Backspace') {
       handleDelete();
-    } else if (currentGuess.length < 5 && /^[a-zA-Zа-яА-Я]$/.test(event.key)) {
+    } else if (currentGuess.length < 5 && /^[а-яёъүө]+$/.test(event.key.toLowerCase())) {
       const newGuess = currentGuess + event.key.toLowerCase();
       setCurrentGuess(newGuess);
       const newGuesses = [...guesses];
       newGuesses[currentRow] = newGuess;
       setGuesses(newGuesses);
-      setCurrentGuess(newGuess);
-      setNewGuess(newGuess);
     }
   };
 
@@ -65,13 +97,7 @@ const WordleGame = () => {
         newGuesses[currentRow] = currentGuess;
         setGuesses(newGuesses);
 
-        const newDisabledLetters = [...disabledLetters];
-        currentGuess.split('').forEach((letter, index) => {
-          if (!word.includes(letter)) {
-            newDisabledLetters.push(letter);
-          }
-        });
-        setDisabledLetters(newDisabledLetters);
+        updateLetterStatuses(currentGuess);
 
         setSubmittedGuesses([...submittedGuesses, currentGuess]);
         setCurrentGuess('');
@@ -93,6 +119,21 @@ const WordleGame = () => {
     const newGuesses = [...guesses];
     newGuesses[currentRow] = newGuess;
     setGuesses(newGuesses);
+  };
+
+  const getCellColor = (guess, index) => {
+    if (!submittedGuesses.includes(guess)) return 'white';
+    if (guess[index] === word[index]) return 'green';
+    if (word.includes(guess[index])) return 'yellow';
+    return 'gray';
+  };
+
+  const getKeyboardColor = (letter) => {
+    const status = letterStatuses[letter];
+    if (status === 'correct') return 'green';
+    if (status === 'present') return 'yellow';
+    if (status === 'absent') return 'gray';
+    return 'white';
   };
 
   useEffect(() => {
@@ -128,13 +169,8 @@ const WordleGame = () => {
                     justifyContent: 'center',
                     margin: 2,
                     borderRadius: 5,
-                    backgroundColor:
-                      submittedGuesses.includes(guess) && guess[i] === word[i]
-                        ? 'green'
-                        : submittedGuesses.includes(guess) && word.includes(guess[i])
-                        ? 'yellow'
-                        : 'white',
-                    color: 'black',
+                    backgroundColor: getCellColor(guess, i),
+                    color: getCellColor(guess, i) === 'gray' ? 'white' : 'black',
                     fontSize: '1.5em',
                     fontWeight: 'bold',
                     transition: rolling && index === currentRow ? 'transform 0.5s' : 'none',
@@ -151,7 +187,7 @@ const WordleGame = () => {
         {gameOver && (
           <div>
             <h2>{submittedGuesses[currentRow - 1] === word ? 'Баяр хүргэе!' : 'Тоглоом дууслаа!'}</h2>
-            <button onClick={() => window.location.reload()} style={{ padding: '10px 20px', fontSize: '1em', borderRadius: '10px' }}>Дахин тоглох</button>
+            <button onClick={resetGame} style={{ padding: '10px 20px', fontSize: '1em', borderRadius: '10px' }}>Дахин тоглох</button>
           </div>
         )}
       </div>
@@ -198,7 +234,7 @@ const WordleGame = () => {
               <div style={{ width: '40px', height: '40px', backgroundColor: 'white', display: 'flex', alignItems: 'center', justifyContent: 'center', border: '1px solid black' }}>У</div>
               <div style={{ width: '40px', height: '40px', backgroundColor: 'white', display: 'flex', alignItems: 'center', justifyContent: 'center', border: '1px solid black' }}>У</div>
               <div style={{ width: '40px', height: '40px', backgroundColor: 'gray', color: 'white', display: 'flex', alignItems: 'center', justifyContent: 'center', border: '1px solid black' }}>Л</div>
-              <div style={{ width: '40px', height: '40px', backgroundColor: 'gray', color: 'white', display: 'flex', alignItems: 'center', justifyContent: 'center', border: '1px solid black' }}>Ь</div>
+              <div style={{ width: '40px', height: '40px', backgroundColor: 'gray', color: 'white', display: 'flex', alignItems: 'center', justifyContent: 'center', border: '1px solid black' }}>Л</div>
             </div>
             <p>Л болон Ь үсэг энэ үгэнд ороогүй байх тул саарал өнгөтэй болсон байна.</p>
           </div>
@@ -226,8 +262,8 @@ const WordleGame = () => {
                     alignItems: 'center',
                     justifyContent: 'center',
                     margin: '2px',
-                    backgroundColor: disabledLetters.includes(letter) ? '#d3d3d3' : '#fff',
-                    color: 'black',
+                    backgroundColor: getKeyboardColor(letter),
+                    color: getKeyboardColor(letter) === 'gray' ? 'white' : 'black',
                     fontSize: '1.2em',
                     cursor: 'pointer',
                     borderRadius: '5px',

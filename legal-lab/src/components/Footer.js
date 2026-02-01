@@ -65,25 +65,7 @@ const Footer = () => {
           color: 'gray',
         }}
       >
-        Developed by{' '}
-        <Link
-          href="https://www.linkedin.com/in/altangerelg/"
-          target="_blank"
-          rel="noopener"
-          className="footer-text"
-          sx={{ textDecoration: 'underline', marginLeft: '5px' }}
-          style={{ color: "white", textDecoration: "none", fontWeight: "bold" }}
-          onMouseOver={(e) => {
-            e.target.style.color = "green";
-            e.target.style.textDecoration = "underline";
-          }}
-          onMouseOut={(e) => {
-            e.target.style.color = "white";
-            e.target.style.textDecoration = "none";
-          }}
-        >
-          Altangerel
-        </Link>
+        
       </Box>
     </footer>
   );
